@@ -12,7 +12,7 @@ import {
     ErrorMessage,
     SubmitButton
 } from "./ContactForm.styled"; 
-import { nanoid } from "nanoid";
+
 
 
 
@@ -31,22 +31,18 @@ const schema = Yup.object().shape({
  .required('Required'),
 })
 
+const initialValues = { name: "", number: "" };
+
 export const ContactForm = ({ onAddContact }) => {
-    const handleSubmit = (values, { resetForm }) => {
-        onAddContact({id:nanoid(), ...values});
-        resetForm()
-    };
 
     return (
       <Formik
-        initialValues={{
-          name:"",
-          number:"",
-        }}
-
-        onSubmit={handleSubmit}
-
-        validationSchema={schema}
+      initialValues={initialValues}
+      onSubmit={(values, { resetForm }) => {
+        onAddContact({ ...values });
+        resetForm();
+      }}
+      validationSchema={schema}
       >
         
           <Form>
